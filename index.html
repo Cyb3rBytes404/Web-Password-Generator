@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CyberBytes404 | Password Generator</title>
+<meta name="description" content="A standalone, browser-based password generator from CyberBytes404.">
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:
+        radial-gradient(circle at top, #182044 0%, #080b16 55%, #04050a 100%);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+/* Main Card */
+
+.generator {
+    width: 100%;
+    max-width: 720px;
+    background: rgba(13, 18, 35, 0.96);
+    border: 1px solid #26345e;
+    border-radius: 22px;
+    padding: 35px;
+    box-shadow:
+        0 0 35px rgba(0, 229, 255, 0.08),
+        0 25px 70px rgba(0,0,0,0.6);
+}
+
+/* Logo */
+
+.logo {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.cat {
+    font-size: 48px;
+    line-height: 1;
+    filter: drop-shadow(0 0 12px rgba(0,229,255,.5));
+}
+
+.brand {
+    margin-top: 8px;
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.brand .bytes {
+    color: #00e5ff;
+}
+
+.brand .code {
+    color: #8c7cff;
+}
+
+/* Heading */
+
+h1 {
+    text-align: center;
+    margin: 18px 0 8px;
+    font-size: 32px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #9da9c9;
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+/* Password Display */
+
+.password-display {
+    position: relative;
+    background: #050810;
+    border: 2px solid #26345e;
+    border-radius: 14px;
+    padding: 22px 55px 22px 20px;
+    min-height: 76px;
+
+    font-family: "Courier New", monospace;
+    font-size: 23px;
+    font-weight: bold;
+    color: #00e5ff;
+
+    word-break: break-all;
+    text-align: center;
+
+    box-shadow: inset 0 0 20px rgba(0,0,0,.4);
+}
+
+/* Copy button */
+
+.copy-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 60px;
+    height: 60px;
+
+    border: 1px solid #354574;
+    border-radius: 8px;
+
+    background: #151d36;
+    color: white;
+
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.copy-icon:hover {
+    background: #243157;
+}
+
+/* Strength meter */
+
+.strength-container {
+    margin-top: 18px;
+}
+
+.strength-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #9da9c9;
+    margin-bottom: 7px;
+}
+
+.strength-bar {
+    height: 9px;
+    background: #080b13;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.strength-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 20px;
+    transition: width .35s ease;
+    background: #ff4d6d;
+}
+
+/* Buttons */
+
+.main-button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: linear-gradient(
+        90deg,
+        #00e5ff,
+        #7c6cff
+    );
+
+    color: #050810;
+
+    font-size: 17px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: transform .15s, box-shadow .15s;
+}
+
+.main-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,229,255,.2);
+}
+
+/* Difficulty */
+
+.level-title {
+    margin-top: 27px;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.levels {
+    display: flex;
+    gap: 10px;
+}
+
+.level {
+    flex: 1;
+}
+
+.level input {
+    display: none;
+}
+
+.level label {
+    display: block;
+    text-align: center;
+
+    padding: 13px 7px;
+
+    background: #11182d;
+    border: 1px solid #29365c;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.level label:hover {
+    border-color: #00e5ff;
+}
+
+.level input:checked + label {
+    border-color: #00e5ff;
+    background: #172542;
+    box-shadow: 0 0 15px rgba(0,229,255,.12);
+}
+
+/* Cyber Tip */
+
+.tip {
+    margin-top: 25px;
+
+    background: #0b1224;
+    border: 1px solid #26345e;
+    border-radius: 12px;
+
+    padding: 18px;
+
+    line-height: 1.55;
+    color: #c5cee7;
+}
+
+.tip-title {
+    color: #00e5ff;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Terminal */
+
+.terminal {
+    margin-top: 22px;
+
+    background: #05070d;
+    border-radius: 10px;
+
+    padding: 13px 15px;
+
+    font-family: "Courier New", monospace;
+    font-size: 15px;
+
+    color: #6f7c9e;
+}
+
+.terminal span {
+    color: #00e5ff;
+}
+
+/* Footer */
+
+.footer {
+    margin-top: 20px;
+    text-align: center;
+
+    color: #626f91;
+    font-size: 12px;
+}
+
+/* Mobile */
+
+@media(max-width: 550px) {
+
+    .generator {
+        padding: 25px 18px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    .password-display {
+        font-size: 18px;
+    }
+
+    .levels {
+        flex-direction: column;
+    }
+
+}
+
+
+/* Back to Cyber Safety button */
+.back-row {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.back-row .button {
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 10px;
+    background: #00e5ff;
+    color: #050810;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform .15s, box-shadow .15s, background .15s;
+}
+
+.back-row .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,229,255,.2);
+    background: #7c6cff;
+    color: #fff;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="generator">
+
+<!-- CyberBytes404 Branding -->
+
+<div class="logo">
+
+    <div class="brand" aria-label="CyberBytes404">
+        Cyber<span class="bytes">Bytes</span><span class="code">404</span>
+    </div>
+
+</div>
+
+<h1>🔐 Password Generator</h1>
+
+<p class="subtitle">
+    Let's build a password that is
+    <strong>easy to remember</strong>
+    but difficult for hackers to guess!
+</p>
+
+
+<!-- Password -->
+
+<div class="password-display">
+
+    <span id="password">
+        Loading...
+    </span>
+
+    <button
+		
+        class="copy-icon"
+        onclick="copyPassword()"
+        title="Copy password">
+        Copy
+    </button>
+
+</div>
+
+
+<!-- Strength -->
+
+<div class="strength-container">
+
+    <div class="strength-label">
+
+        <span>Password Strength</span>
+
+        <strong id="strengthText">
+            —
+        </strong>
+
+    </div>
+
+    <div class="strength-bar">
+
+        <div
+            class="strength-fill"
+            id="strengthFill">
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Generate -->
+
+<button
+    class="main-button"
+    onclick="generatePassword()">
+
+    🎲 Generate New Password
+
+</button>
+
+
+<!-- Difficulty -->
+
+<div class="level-title">
+    Choose your level:
+</div>
+
+<div class="levels">
+
+    <div class="level">
+
+        <input
+            type="radio"
+            name="level"
+            id="easy"
+            value="easy"
+            checked
+            onchange="generatePassword()">
+
+        <label for="easy">
+            🦖 Easy
+            <br>
+            <small>Kid Friendly</small>
+        </label>
+
+    </div>
+
+
+    <div class="level">
+
+        <input
+            type="radio"
+            name="level"
+            id="strong"
+            value="strong"
+            onchange="generatePassword()">
+
+        <label for="strong">
+            🔐 Strong
+            <br>
+            <small>Extra Protection</small>
+        </label>
+
+    </div>
+
+
+    <div class="level">
+
+        <input
+            type="radio"
+            name="level"
+            id="super"
+            value="super"
+            onchange="generatePassword()">
+
+        <label for="super">
+            🚀 Super
+            <br>
+            <small>Maximum Power</small>
+        </label>
+
+    </div>
+
+</div>
+
+
+<!-- Educational Tip -->
+
+<div class="tip">
+
+    <div class="tip-title">
+        🧠 Cyber Tip
+    </div>
+
+    Longer passwords are usually harder to guess.
+
+    Don't use your name, birthday, school,
+    favorite team, or pet's name.
+
+    And remember:
+
+    <strong>
+        Never share your password with strangers!
+    </strong>
+
+</div>
+
+
+<!-- Terminal -->
+
+<div class="terminal">
+
+    <span>cyberbytes404@security:~$</span> generating_secure_password...
+    <br><br>
+    <span>status:</span> password generated locally ✓
+
+</div>
+<br>
+			<div class="back-row">
+                <a href="#" class="button" onclick="generatePassword(); return false;">↻ Generate Another Password</a>
+            </div>
+<div class="footer">
+
+    🔒 Your password is generated in your browser.
+    It is not sent to CyberBytes404.
+
+    <br><br>
+
+    © CyberBytes404
+
+</div>
+
+</div>
+
+<script>
+
+/* ==========================
+   WORD LISTS
+========================== */
+
+const adjectives = [
+    "Happy",
+    "Purple",
+    "Fuzzy",
+    "Brave",
+    "Silly",
+    "Turbo",
+    "Mighty",
+    "Crazy",
+    "Lucky",
+    "Fluffy",
+    "Sneaky",
+    "Super",
+    "Cosmic",
+    "Rocket",
+    "Ninja",
+    "Magic",
+    "Electric",
+    "Awesome",
+    "Clever",
+    "Wild"
+];
+
+
+const animals = [
+    "Dino",
+    "Panda",
+    "Tiger",
+    "Dragon",
+    "Koala",
+    "Penguin",
+    "Fox",
+    "Monkey",
+    "Shark",
+    "Otter",
+    "Lion",
+    "Wolf",
+    "Eagle",
+    "Gecko",
+    "Llama",
+    "Frog",
+    "Kitten",
+    "Falcon",
+    "Turtle",
+    "Raccoon"
+];
+
+
+const places = [
+    "Planet",
+    "Castle",
+    "Jungle",
+    "Galaxy",
+    "Volcano",
+    "Island",
+    "Moon",
+    "Space",
+    "Mountain",
+    "Ocean",
+    "Rocket",
+    "Fortress"
+];
+
+
+const symbols =
+"!@#$%^&*+-=";
+
+
+/* ==========================
+   RANDOM FUNCTIONS
+========================== */
+
+function randomItem(array) {
+
+    return array[
+        Math.floor(
+            Math.random() * array.length
+        )
+    ];
+
+}
+
+
+function randomNumber(max) {
+
+    return Math.floor(
+        Math.random() * max
+    );
+
+}
+
+
+function randomSymbol() {
+
+    return randomItem(
+        symbols.split("")
+    );
+
+}
+
+
+/* ==========================
+   PASSWORD GENERATOR
+========================== */
+
+function generatePassword() {
+
+    const level =
+        document.querySelector(
+            'input[name="level"]:checked'
+        ).value;
+
+
+    let password;
+
+
+    /* EASY */
+
+    if (level === "easy") {
+
+        password =
+            randomItem(adjectives) +
+            randomItem(animals) +
+            randomNumber(100);
+
+    }
+
+
+    /* STRONG */
+
+    else if (level === "strong") {
+
+        password =
+            randomItem(adjectives) +
+            randomItem(animals) +
+            randomItem(places) +
+            randomNumber(1000) +
+            randomSymbol();
+
+    }
+
+
+    /* SUPER */
+
+    else {
+
+        password =
+            randomItem(adjectives) +
+            randomItem(animals) +
+            randomItem(places) +
+            randomNumber(10000) +
+            randomSymbol() +
+            randomSymbol();
+
+    }
+
+
+    document.getElementById(
+        "password"
+    ).textContent = password;
+
+
+    updateStrength(password);
+
+}
+
+
+/* ==========================
+   PASSWORD STRENGTH
+========================== */
+
+function updateStrength(password) {
+
+    let score = 0;
+
+
+    if (password.length >= 10)
+        score++;
+
+    if (password.length >= 14)
+        score++;
+
+    if (/[A-Z]/.test(password))
+        score++;
+
+    if (/[0-9]/.test(password))
+        score++;
+
+    if (/[^A-Za-z0-9]/.test(password))
+        score++;
+
+
+    const fill =
+        document.getElementById(
+            "strengthFill"
+        );
+
+    const text =
+        document.getElementById(
+            "strengthText"
+        );
+
+
+    if (score <= 2) {
+
+        fill.style.width = "30%";
+        text.textContent = "GOOD";
+
+    }
+
+    else if (score <= 3) {
+
+        fill.style.width = "55%";
+        text.textContent = "STRONG";
+
+    }
+
+    else if (score === 4) {
+
+        fill.style.width = "80%";
+        text.textContent = "VERY STRONG";
+
+    }
+
+    else {
+
+        fill.style.width = "100%";
+        text.textContent = "SUPER STRONG";
+
+    }
+
+}
+
+
+/* ==========================
+   COPY
+========================== */
+
+function copyPassword() {
+
+    const password =
+        document.getElementById(
+            "password"
+        ).textContent;
+
+
+    navigator.clipboard.writeText(
+        password
+    );
+
+
+    const button =
+        document.querySelector(
+            ".copy-icon"
+        );
+
+
+    button.textContent = "Copied!";
+
+
+    setTimeout(function() {
+
+        button.textContent = "Copy";
+
+    }, 1500);
+
+}
+
+
+/* ==========================
+   START
+========================== */
+
+generatePassword();
+
+</script>
+
+</body>
+</html>
