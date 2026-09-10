@@ -4,6 +4,8 @@ A simple, kid-friendly password generator created by **CyberBytes404** to help t
 
 The generator creates passwords **locally in your web browser**. Generated passwords are not sent to or stored by CyberBytes404.
 
+![CyberBytes404 Password Generator](assets/password-generator-preview.png)
+
 ## 🚀 Try the Password Generator
 
 ### [Launch the CyberBytes404 Password Generator](https://cyb3rbytes404.github.io/Web-Password-Generator/)
